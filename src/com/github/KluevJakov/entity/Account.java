@@ -10,14 +10,14 @@ public abstract class Account {
 
     //logic for commission query
 
-    public boolean Replenish(int income) {
+    public boolean replenish(int income) {
         balance += income;
         return true;
     }
 
-    public abstract boolean Withdraw(int outgo);
+    public abstract boolean withdraw(int outgo);
 
-    public abstract boolean Transfer(Account forTransfer, int outgo);
+    public abstract boolean transfer(Account forTransfer, int outgo);
 
     public int getBalance() {
         return balance;

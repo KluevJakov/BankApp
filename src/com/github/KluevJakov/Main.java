@@ -29,10 +29,10 @@ public class Main {
         Account myAcc2 = accountFactory.getDeposit(client2, 2500, new Date());
         Account myAcc3 = accountFactory.getCredit(client3, 100, 5, 5000);
 
-        myAcc1.Replenish(1234);
-        myAcc1.Withdraw(3400);
+        myAcc1.replenish(1234);
+        myAcc1.withdraw(3400);
 
-        if (myAcc1.Transfer(myAcc3, 1200)) {
+        if (myAcc1.transfer(myAcc3, 1200)) {
             System.out.println("Success transaction");
         } else {
             System.out.println("Failed transaction");

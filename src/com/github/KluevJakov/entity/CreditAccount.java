@@ -13,7 +13,7 @@ public class CreditAccount extends Account {
     }
 
     @Override
-    public boolean Withdraw(int outgo) {
+    public boolean withdraw(int outgo) {
         if (balance - limit >= outgo) {
             balance -= outgo;
             return true;
@@ -23,14 +23,14 @@ public class CreditAccount extends Account {
     }
 
     @Override
-    public boolean Transfer(Account forTransfer, int outgo) {
+    public boolean transfer(Account forTransfer, int outgo) {
         if (forTransfer.getOwner().equals(this.getOwner())) {
             if (balance - limit >= outgo) {
                 balance -= outgo;
             } else {
                 return false;
             }
-            forTransfer.Replenish(outgo);
+            forTransfer.replenish(outgo);
             return true;
         } else {
             return false;
