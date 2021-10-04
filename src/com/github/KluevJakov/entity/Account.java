@@ -2,8 +2,8 @@ package com.github.KluevJakov.entity;
 
 public abstract class Account {
     int balance;
-    int interest;
-    int commission;
+    double interest;
+    double commission;
     Client owner;
 
     abstract void Replenish();

@@ -2,13 +2,14 @@ package com.github.KluevJakov;
 
 import com.github.KluevJakov.entity.Account;
 import com.github.KluevJakov.entity.AccountFactory;
-import com.github.KluevJakov.entity.AccountTypes;
 import com.github.KluevJakov.entity.Client;
+
+import java.util.Date;
 
 public class Main {
 
     public static void main(String[] args) {
-        /*Client client1 = Client.newBuilder("Andrew", "Slime")
+        Client client1 = Client.newBuilder("Andrew", "Javovsky")
                 .setPassport(6319)
                 .build();
 
@@ -20,11 +21,13 @@ public class Main {
 
         System.out.println(client1);
         System.out.println(client2);
-        System.out.println(client3);*/
+        System.out.println(client3);
 
-        Account myAcc1 = AccountFactory.getAccount(AccountTypes.CREDIT);
-        Account myAcc2 = AccountFactory.getAccount(AccountTypes.CURRENT);
-        Account myAcc3 = AccountFactory.getAccount(AccountTypes.DEPOSIT);
+        AccountFactory accountFactory = new AccountFactory();
+
+        Account myAcc1 = accountFactory.getCurrent(client1, 10000, 3.5);
+        Account myAcc2 = accountFactory.getDeposit(client2, 2500, new Date());
+        Account myAcc3 = accountFactory.getCredit(client3, 100, 5, 5000);
 
         System.out.println(myAcc1);
         System.out.println(myAcc2);

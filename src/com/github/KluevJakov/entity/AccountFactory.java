@@ -1,23 +1,17 @@
 package com.github.KluevJakov.entity;
 
+import java.util.Date;
+
 public class AccountFactory {
-    public static Account getAccount(AccountTypes type) {
-        Account toReturn;
+    public Account getCurrent(Client owner, int balance, double interest) {
+        return new CurrentAccount(owner, balance, interest);
+    }
 
-        switch (type) {
-            case CREDIT:
-                toReturn = new CreditAccount();
-                break;
-            case CURRENT:
-                toReturn = new CurrentAccount();
-                break;
-            case DEPOSIT:
-                toReturn = new DepositAccount();
-                break;
-            default:
-                throw new IllegalArgumentException("Wrong Account Type");
-        }
+    public Account getDeposit(Client owner, int balance, Date endDate) {
+        return new DepositAccount(owner, balance, endDate);
+    }
 
-        return toReturn;
+    public Account getCredit(Client owner, int balance, double commission, int limit) {
+        return new CreditAccount(owner, balance, commission, limit);
     }
 }
