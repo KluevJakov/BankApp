@@ -1,23 +1,26 @@
 package com.github.KluevJakov;
 
-import com.github.KluevJakov.entity.Account;
-import com.github.KluevJakov.entity.AccountFactory;
-import com.github.KluevJakov.entity.Client;
+import com.github.KluevJakov.entity.*;
 
 import java.util.Date;
 
 public class Main {
 
     public static void main(String[] args) {
-        Client client1 = Client.newBuilder("Andrew", "Javovsky")
+        Client client1 = TrustClient.newBuilder("Andrew", "Javovsky")
                 .setPassport(6319)
                 .build();
 
-        Client client2 = Client.newBuilder("Roman", "Neviantsev")
+        Client client2 = TrustClient.newBuilder("Roman", "Neviantsev")
                 .setAddress("Saratov, Hrustalnaya st, 68A, 36")
                 .build();
 
-        Client client3 = Client.newBuilder("Jakov", "Kluev").build();
+        Client client3 = TrustClient.newBuilder("Jakov", "Kluev").build();
+
+        Client client4 = new TrustClient("Jakov","May");
+        System.out.println(client4);
+        client4 = new DistrustClient(new TrustClient("Jakov","May"));
+        System.out.println(client4);
 
         System.out.println(client1);
         System.out.println(client2);
