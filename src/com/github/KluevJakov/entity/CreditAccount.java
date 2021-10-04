@@ -12,16 +12,29 @@ public class CreditAccount extends Account {
         this.limit = limit;
     }
 
-    public void Replenish() {
-
+    @Override
+    public boolean Withdraw(int outgo) {
+        if (balance - limit >= outgo) {
+            balance -= outgo;
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void Withdraw() {
-
-    }
-
-    public void Transfer() {
-
+    @Override
+    public boolean Transfer(Account forTransfer, int outgo) {
+        if (forTransfer.getOwner().equals(this.getOwner())) {
+            if (balance - limit >= outgo) {
+                balance -= outgo;
+            } else {
+                return false;
+            }
+            forTransfer.Replenish(outgo);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getLimit() {

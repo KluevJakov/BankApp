@@ -14,16 +14,28 @@ public class DepositAccount extends Account {
         this.endDate = endDate;
     }
 
-    public void Replenish() {
-
+    public boolean Withdraw(int outgo) {
+        if (balance >= outgo && endDate.before(new Date())) {
+            balance -= outgo;
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void Withdraw() {
-
-    }
-
-    public void Transfer() {
-
+    @Override
+    public boolean Transfer(Account forTransfer, int outgo) {
+        if (forTransfer.getOwner().equals(this.getOwner())) {
+            if (balance >= outgo && endDate.before(new Date())) {
+                balance -= outgo;
+            } else {
+                return false;
+            }
+            forTransfer.Replenish(outgo);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Date getEndDate() {

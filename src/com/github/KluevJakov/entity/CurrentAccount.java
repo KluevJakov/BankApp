@@ -9,16 +9,29 @@ public class CurrentAccount extends Account {
         this.commission = 0;
     }
 
-    public void Replenish() {
-
+    @Override
+    public boolean Withdraw(int outgo) {
+        if (balance >= outgo) {
+            balance -= outgo;
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void Withdraw() {
-
-    }
-
-    public void Transfer() {
-
+    @Override
+    public boolean Transfer(Account forTransfer, int outgo) {
+        if (forTransfer.getOwner().equals(this.getOwner())) {
+            if (balance >= outgo) {
+                balance -= outgo;
+            } else {
+                System.out.println("Ddd");
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
