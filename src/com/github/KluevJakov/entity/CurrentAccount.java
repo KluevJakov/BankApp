@@ -1,19 +1,21 @@
 package com.github.KluevJakov.entity;
 
-public class CurrentAccount implements Account {
+public class CurrentAccount extends Account {
 
-    @Override
     public void Replenish() {
 
     }
 
-    @Override
     public void Withdraw() {
 
     }
 
-    @Override
     public void Transfer() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "CurrentAccount{}";
     }
 }

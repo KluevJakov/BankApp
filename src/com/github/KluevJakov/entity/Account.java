@@ -1,9 +1,14 @@
 package com.github.KluevJakov.entity;
 
-public interface Account {
-    void Replenish();
+public abstract class Account {
+    int balance;
+    int interest;
+    int commission;
+    Client owner;
 
-    void Withdraw();
+    abstract void Replenish();
 
-    void Transfer();
+    abstract void Withdraw();
+
+    abstract void Transfer();
 }
