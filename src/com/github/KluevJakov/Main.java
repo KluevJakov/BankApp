@@ -32,7 +32,12 @@ public class Main {
         System.out.println(myAcc2);
         System.out.println(myAcc3);
 
-        Requester requester = new DepositRequest();
+        Requester requester = new RequestExecutor(myAcc1);
         requester.linkWith(new DepositRequest());
+        myAcc1.setRequester(requester);
+
+        myAcc1.accrueDeposit();
+
+        System.out.println(myAcc1);
     }
 }

@@ -10,12 +10,12 @@ public abstract class Requester {
         return next;
     }
 
-    public abstract boolean check(Account account);
+    public abstract boolean check(Account acc);
 
-    protected boolean checkNext(Account account) {
+    protected boolean checkNext(Account acc) {
         if (next == null) {
-            return true;
+            return false;
         }
-        return next.check(account);
+        return next.check(acc);
     }
 }

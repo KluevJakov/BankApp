@@ -1,20 +1,32 @@
 package com.github.KluevJakov.account;
 
 import com.github.KluevJakov.client.Client;
+import com.github.KluevJakov.requester.RequestType;
+import com.github.KluevJakov.requester.Requester;
 
 public abstract class Account {
     double balance;
     double interest;
     double commission;
     Client owner;
+    private Requester requester;
+    protected RequestType requestType;
+
+    public void setRequester(Requester requester) {
+        this.requester = requester;
+    }
 
     public void accrueDeposit() {
-        replenish(balance * (interest / 100));
+        if (requester.check(this)) {
+            replenish(balance * (interest / 100));
+        }
     }
 
     public void accrueCommission() {
-        if (balance < 0) {
-            withdraw(-1 * balance * (commission / 100));
+        if (requester.check(this)) {
+            if (balance < 0) {
+                withdraw(-1 * balance * (commission / 100));
+            }
         }
     }
 
@@ -45,5 +57,9 @@ public abstract class Account {
 
     public Client getOwner() {
         return owner;
+    }
+
+    public RequestType getRequestType() {
+        return requestType;
     }
 }

@@ -1,5 +1,15 @@
 package com.github.KluevJakov.requester;
 
-public class RequestExecutor {
+import com.github.KluevJakov.account.Account;
 
+public class RequestExecutor extends Requester {
+
+    public RequestExecutor(Account acc) {
+
+    }
+
+    @Override
+    public boolean check(Account acc) {
+        return checkNext(acc);
+    }
 }

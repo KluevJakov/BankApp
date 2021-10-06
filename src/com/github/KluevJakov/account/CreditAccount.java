@@ -1,6 +1,7 @@
 package com.github.KluevJakov.account;
 
 import com.github.KluevJakov.client.Client;
+import com.github.KluevJakov.requester.RequestType;
 
 public class CreditAccount extends Account {
 
@@ -12,6 +13,7 @@ public class CreditAccount extends Account {
         this.interest = 0;
         this.commission = commission;
         this.limit = limit;
+        this.requestType = RequestType.COMMISSION;
     }
 
     @Override

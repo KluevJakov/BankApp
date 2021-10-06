@@ -1,6 +1,7 @@
 package com.github.KluevJakov.account;
 
 import com.github.KluevJakov.client.Client;
+import com.github.KluevJakov.requester.RequestType;
 
 public class CurrentAccount extends Account {
 
@@ -9,6 +10,7 @@ public class CurrentAccount extends Account {
         this.balance = balance;
         this.interest = interest;
         this.commission = 0;
+        this.requestType = RequestType.DEPOSIT;
     }
 
     @Override

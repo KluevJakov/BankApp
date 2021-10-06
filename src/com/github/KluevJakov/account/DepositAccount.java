@@ -1,6 +1,7 @@
 package com.github.KluevJakov.account;
 
 import com.github.KluevJakov.client.Client;
+import com.github.KluevJakov.requester.RequestType;
 
 import java.util.Date;
 
@@ -14,6 +15,7 @@ public class DepositAccount extends Account {
         this.interest = calculateInterest(balance);
         this.commission = 0;
         this.endDate = endDate;
+        this.requestType = RequestType.DEPOSIT;
     }
 
     public double calculateInterest(double balance) {
