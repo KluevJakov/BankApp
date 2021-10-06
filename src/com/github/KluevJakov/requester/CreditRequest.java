@@ -1,4 +1,6 @@
-package com.github.KluevJakov.entity;
+package com.github.KluevJakov.requester;
+
+import com.github.KluevJakov.account.Account;
 
 public class CreditRequest extends Requester {
 

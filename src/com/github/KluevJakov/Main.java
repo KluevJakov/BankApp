@@ -1,6 +1,11 @@
 package com.github.KluevJakov;
 
-import com.github.KluevJakov.entity.*;
+import com.github.KluevJakov.account.Account;
+import com.github.KluevJakov.account.AccountFactory;
+import com.github.KluevJakov.client.Client;
+import com.github.KluevJakov.client.DistrustClient;
+import com.github.KluevJakov.client.TrustClient;
+import com.github.KluevJakov.requester.*;
 
 import java.util.Date;
 

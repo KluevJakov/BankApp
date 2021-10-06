@@ -1,4 +1,6 @@
-package com.github.KluevJakov.entity;
+package com.github.KluevJakov.account;
+
+import com.github.KluevJakov.client.Client;
 
 public abstract class Account {
     double balance;

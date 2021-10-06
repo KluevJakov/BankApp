@@ -1,4 +1,6 @@
-package com.github.KluevJakov.entity;
+package com.github.KluevJakov.account;
+
+import com.github.KluevJakov.client.Client;
 
 import java.util.Date;
 
@@ -29,12 +31,11 @@ public class DepositAccount extends Account {
 
     @Override
     public boolean transfer(Account forTransfer, double outgo) {
-        if (forTransfer.getOwner().equals(this.getOwner())) {
-            if (balance >= outgo && endDate.before(new Date())) {
-                balance -= outgo;
-            } else {
-                return false;
-            }
+        if (forTransfer.getOwner().equals(this.getOwner())
+                && balance >= outgo
+                && endDate.before(new Date())
+                && outgo <= forTransfer.getOwner().paymentLimit()) {
+            balance -= outgo;
             forTransfer.replenish(outgo);
             return true;
         } else {

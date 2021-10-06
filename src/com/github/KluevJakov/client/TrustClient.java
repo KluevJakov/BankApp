@@ -1,4 +1,4 @@
-package com.github.KluevJakov.entity;
+package com.github.KluevJakov.client;
 
 public class TrustClient implements Client {
     private String name;
@@ -12,7 +12,7 @@ public class TrustClient implements Client {
     }
 
     @Override
-    public int paymentLimit(int limit) {
+    public int paymentLimit() {
         return 0;
     }
 

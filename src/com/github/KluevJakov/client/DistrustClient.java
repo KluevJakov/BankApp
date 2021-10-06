@@ -1,4 +1,4 @@
-package com.github.KluevJakov.entity;
+package com.github.KluevJakov.client;
 
 public class DistrustClient implements Client {
 
@@ -17,7 +17,7 @@ public class DistrustClient implements Client {
     }
 
     @Override
-    public int paymentLimit(int limit) {
-        return limit;
+    public int paymentLimit() {
+        return 1000;
     }
 }

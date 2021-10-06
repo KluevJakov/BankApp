@@ -1,4 +1,6 @@
-package com.github.KluevJakov.entity;
+package com.github.KluevJakov.account;
+
+import com.github.KluevJakov.client.Client;
 
 public class CreditAccount extends Account {
 
@@ -24,12 +26,10 @@ public class CreditAccount extends Account {
 
     @Override
     public boolean transfer(Account forTransfer, double outgo) {
-        if (forTransfer.getOwner().equals(this.getOwner())) {
-            if (balance - limit >= outgo) {
-                balance -= outgo;
-            } else {
-                return false;
-            }
+        if (forTransfer.getOwner().equals(this.getOwner())
+                && balance - outgo >= (limit * -1)
+                && outgo <= forTransfer.getOwner().paymentLimit()) {
+            balance -= outgo;
             forTransfer.replenish(outgo);
             return true;
         } else {
