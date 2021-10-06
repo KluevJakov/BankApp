@@ -20,7 +20,7 @@ public class Main {
                 .setAddress("Address")
                 .build();
 
-        Client client3 = new DistrustClient(TrustClient.newBuilder("Jakov", "Kluev").build());
+        Client client3 = new DistrustClient(new TrustClient("Jakov", "Kluev"));
 
         AccountFactory accountFactory = new AccountFactory();
 
@@ -28,36 +28,11 @@ public class Main {
         Account myAcc2 = accountFactory.getDeposit(client2, 2500, new Date());
         Account myAcc3 = accountFactory.getCredit(client3, 100, 5, 5000);
 
-        if (myAcc1.replenish(1234)) {
-            System.out.println("Success transaction");
-        } else {
-            System.out.println("Failed transaction");
-        }
-
-        if (myAcc3.withdraw(3400)) {
-            System.out.println("Success transaction");
-        } else {
-            System.out.println("Failed transaction");
-        }
-
-        if (myAcc1.transfer(myAcc3, 1200)) {
-            System.out.println("Success transaction");
-        } else {
-            System.out.println("Failed transaction");
-        }
-
-        System.out.println(myAcc1);
-        System.out.println(myAcc2);
-        System.out.println(myAcc3);
-
-        myAcc1.accrueDeposit();
-        myAcc2.accrueDeposit();
-        myAcc3.accrueCommission();
-
         System.out.println(myAcc1);
         System.out.println(myAcc2);
         System.out.println(myAcc3);
 
         Requester requester = new DepositRequest();
+        requester.linkWith(new DepositRequest());
     }
 }
