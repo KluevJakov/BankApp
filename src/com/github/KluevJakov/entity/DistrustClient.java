@@ -1,13 +1,23 @@
 package com.github.KluevJakov.entity;
 
-public class DistrustClient extends ClientDecorator {
+public class DistrustClient implements Client {
+
+    private Client client;
 
     public DistrustClient(Client wrap) {
-        super(wrap);
+        this.client = wrap;
     }
+
 
     @Override
     public String toString() {
-        return "DistrustClient{}";
+        return "DistrustClient{" +
+                "client=" + client +
+                '}';
+    }
+
+    @Override
+    public int paymentLimit(int limit) {
+        return limit;
     }
 }

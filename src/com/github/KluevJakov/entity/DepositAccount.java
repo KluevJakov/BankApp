@@ -6,15 +6,19 @@ public class DepositAccount extends Account {
 
     private Date endDate;
 
-    public DepositAccount(Client owner, int balance, Date endDate) {
+    public DepositAccount(Client owner, double balance, Date endDate) {
         this.owner = owner;
         this.balance = balance;
-        this.interest = 0; //logic interest calculation
+        this.interest = calculateInterest(balance);
         this.commission = 0;
         this.endDate = endDate;
     }
 
-    public boolean withdraw(int outgo) {
+    public double calculateInterest(double balance) {
+        return balance > 1000 ? 3 : 5;
+    }
+
+    public boolean withdraw(double outgo) {
         if (balance >= outgo && endDate.before(new Date())) {
             balance -= outgo;
             return true;
@@ -24,7 +28,7 @@ public class DepositAccount extends Account {
     }
 
     @Override
-    public boolean transfer(Account forTransfer, int outgo) {
+    public boolean transfer(Account forTransfer, double outgo) {
         if (forTransfer.getOwner().equals(this.getOwner())) {
             if (balance >= outgo && endDate.before(new Date())) {
                 balance -= outgo;

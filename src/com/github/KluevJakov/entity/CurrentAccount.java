@@ -10,7 +10,7 @@ public class CurrentAccount extends Account {
     }
 
     @Override
-    public boolean withdraw(int outgo) {
+    public boolean withdraw(double outgo) {
         if (balance >= outgo) {
             balance -= outgo;
             return true;
@@ -20,7 +20,7 @@ public class CurrentAccount extends Account {
     }
 
     @Override
-    public boolean transfer(Account forTransfer, int outgo) {
+    public boolean transfer(Account forTransfer, double outgo) {
         if (forTransfer.getOwner().equals(this.getOwner())) {
             if (balance >= outgo) {
                 balance -= outgo;

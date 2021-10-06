@@ -11,6 +11,11 @@ public class TrustClient implements Client {
         this.surname = surname;
     }
 
+    @Override
+    public int paymentLimit(int limit) {
+        return 0;
+    }
+
     public static Builder newBuilder(String name, String surname) {
         return new TrustClient(name, surname).new Builder();
     }

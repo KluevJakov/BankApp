@@ -1,25 +1,35 @@
 package com.github.KluevJakov.entity;
 
 public abstract class Account {
-    int balance;
+    double balance;
     double interest;
     double commission;
     Client owner;
 
-    //logic for deposit query
-
-    //logic for commission query
-
-    public boolean replenish(int income) {
-        balance += income;
-        return true;
+    public void accrueDeposit() {
+        replenish(balance * (interest / 100));
     }
 
-    public abstract boolean withdraw(int outgo);
+    public void accrueCommission() {
+        if (balance < 0) {
+            withdraw(-1 * balance * (commission / 100));
+        }
+    }
 
-    public abstract boolean transfer(Account forTransfer, int outgo);
+    public boolean replenish(double income) {
+        if (income > 0) {
+            balance += income;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    public int getBalance() {
+    public abstract boolean withdraw(double outgo);
+
+    public abstract boolean transfer(Account forTransfer, double outgo);
+
+    public double getBalance() {
         return balance;
     }
 

@@ -4,7 +4,7 @@ public class CreditAccount extends Account {
 
     private int limit;
 
-    public CreditAccount(Client owner, int balance, double commission, int limit) {
+    public CreditAccount(Client owner, double balance, double commission, int limit) {
         this.owner = owner;
         this.balance = balance;
         this.interest = 0;
@@ -13,8 +13,8 @@ public class CreditAccount extends Account {
     }
 
     @Override
-    public boolean withdraw(int outgo) {
-        if (balance - limit >= outgo) {
+    public boolean withdraw(double outgo) {
+        if (balance - outgo >= (limit * -1)) {
             balance -= outgo;
             return true;
         } else {
@@ -23,7 +23,7 @@ public class CreditAccount extends Account {
     }
 
     @Override
-    public boolean transfer(Account forTransfer, int outgo) {
+    public boolean transfer(Account forTransfer, double outgo) {
         if (forTransfer.getOwner().equals(this.getOwner())) {
             if (balance - limit >= outgo) {
                 balance -= outgo;
