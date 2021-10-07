@@ -3,19 +3,27 @@ package com.github.KluevJakov.account;
 import com.github.KluevJakov.client.Client;
 import com.github.KluevJakov.requester.RequestType;
 
-public class CurrentAccount extends Account {
+import java.util.Date;
 
-    public CurrentAccount(Client owner, int balance, double interest) {
+public class DepositAccount extends Account {
+
+    private Date endDate;
+
+    public DepositAccount(Client owner, double balance, Date endDate) {
         this.owner = owner;
         this.balance = balance;
-        this.interest = interest;
+        this.interest = calculateInterest(balance);
         this.commission = 0;
+        this.endDate = endDate;
         this.requestType = RequestType.DEPOSIT;
     }
 
-    @Override
+    public double calculateInterest(double balance) {
+        return balance > 1000 ? 3 : 5;
+    }
+
     public boolean withdraw(double outgo) {
-        if (balance >= outgo) {
+        if (balance >= outgo && endDate.after(new Date())) {
             balance -= outgo;
             return true;
         } else {
@@ -27,6 +35,7 @@ public class CurrentAccount extends Account {
     public boolean transfer(Account forTransfer, double outgo) {
         if (forTransfer.getOwner().equals(this.getOwner())
                 && balance >= outgo
+                && endDate.after(new Date())
                 && outgo <= forTransfer.getOwner().paymentLimit()) {
             balance -= outgo;
             forTransfer.replenish(outgo);
@@ -36,13 +45,18 @@ public class CurrentAccount extends Account {
         }
     }
 
+    public Date getEndDate() {
+        return endDate;
+    }
+
     @Override
     public String toString() {
-        return "CurrentAccount{" +
+        return "DepositAccount{" +
                 "balance=" + balance +
                 ", interest=" + interest +
                 ", commission=" + commission +
                 ", owner=" + owner +
+                ", endDate=" + endDate +
                 '}';
     }
 }

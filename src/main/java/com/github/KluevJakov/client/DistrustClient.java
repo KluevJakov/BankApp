@@ -17,7 +17,7 @@ public class DistrustClient implements Client {
     }
 
     @Override
-    public int paymentLimit() {
+    public double paymentLimit() {
         return 1000;
     }
 }

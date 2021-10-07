@@ -12,8 +12,8 @@ public class TrustClient implements Client {
     }
 
     @Override
-    public int paymentLimit() {
-        return 0;
+    public double paymentLimit() {
+        return Double.MAX_VALUE;
     }
 
     public static Builder newBuilder(String name, String surname) {
