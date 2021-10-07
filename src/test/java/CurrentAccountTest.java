@@ -1,6 +1,5 @@
 import com.github.KluevJakov.account.Account;
-import com.github.KluevJakov.account.CreditAccount;
-import com.github.KluevJakov.account.CurrentAccount;
+import com.github.KluevJakov.account.AccountFactory;
 import com.github.KluevJakov.client.Client;
 import com.github.KluevJakov.client.TrustClient;
 import com.github.KluevJakov.requester.CreditRequest;
@@ -16,11 +15,14 @@ public class CurrentAccountTest {
             .setAddress("Address")
             .setPassport(0)
             .build();
+
     Double delta = 0.0001;
+
+    AccountFactory accountFactory = new AccountFactory();
 
     @Test
     public void replenishNegativeCase() {
-        Account currentAcc = new CurrentAccount(client, 0, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 0, 3.5);
 
         currentAcc.replenish(-100);
 
@@ -29,7 +31,7 @@ public class CurrentAccountTest {
 
     @Test
     public void replenishNullCase() {
-        Account currentAcc = new CurrentAccount(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
 
         currentAcc.replenish(0);
 
@@ -38,7 +40,7 @@ public class CurrentAccountTest {
 
     @Test
     public void replenishPositiveCase() {
-        Account currentAcc = new CurrentAccount(client, 0, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 0, 3.5);
 
         currentAcc.replenish(100);
 
@@ -47,7 +49,7 @@ public class CurrentAccountTest {
 
     @Test
     public void withdrawPositiveCase() {
-        Account currentAcc = new CurrentAccount(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
 
         currentAcc.withdraw(100);
 
@@ -56,7 +58,7 @@ public class CurrentAccountTest {
 
     @Test
     public void withdrawNegativeCase() {
-        Account currentAcc = new CurrentAccount(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
 
         currentAcc.withdraw(-100);
 
@@ -65,7 +67,7 @@ public class CurrentAccountTest {
 
     @Test
     public void notEnoughtBalanceCase() {
-        Account currentAcc = new CurrentAccount(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
 
         currentAcc.withdraw(1000);
 
@@ -78,8 +80,8 @@ public class CurrentAccountTest {
                 .setAddress("Address")
                 .setPassport(0)
                 .build();
-        Account currentAcc = new CurrentAccount(client, 100, 3.5);
-        Account otherAcc = new CurrentAccount(otherClient, 0, 5.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
+        Account otherAcc = accountFactory.getCurrent(otherClient, 0, 5.5);
 
         currentAcc.transfer(otherAcc, 50);
 
@@ -89,8 +91,8 @@ public class CurrentAccountTest {
 
     @Test
     public void transferToMyAccountCase() {
-        Account currentAcc = new CurrentAccount(client, 100, 3.5);
-        Account otherAcc = new CurrentAccount(client, 0, 5.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
+        Account otherAcc = accountFactory.getCurrent(client, 0, 5.5);
 
         currentAcc.transfer(otherAcc, 30);
 
@@ -100,8 +102,8 @@ public class CurrentAccountTest {
 
     @Test
     public void transferNegativeCase() {
-        Account currentAcc = new CurrentAccount(client, 100, 3.5);
-        Account otherAcc = new CurrentAccount(client, 0, 5.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
+        Account otherAcc = accountFactory.getCurrent(client, 0, 5.5);
 
         currentAcc.transfer(otherAcc, -30);
 
@@ -111,8 +113,8 @@ public class CurrentAccountTest {
 
     @Test
     public void transferToOtherAccountTypeCase() {
-        Account currentAcc = new CurrentAccount(client, 100, 3.5);
-        Account otherAcc = new CreditAccount(client, 0, 1.2, 1000);
+        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
+        Account otherAcc = accountFactory.getCredit(client, 0, 1.2, 1000);
 
         currentAcc.transfer(otherAcc, 30);
 
@@ -122,7 +124,7 @@ public class CurrentAccountTest {
 
     @Test
     public void requestDepositCase() {
-        Account currentAcc = new CurrentAccount(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
         Requester requester = new RequestExecutor(currentAcc);
         requester.linkWith(new DepositRequest());
         currentAcc.setRequester(requester);
@@ -134,7 +136,7 @@ public class CurrentAccountTest {
 
     @Test
     public void requestCommissionCase() {
-        Account currentAcc = new CurrentAccount(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
         Requester requester = new RequestExecutor(currentAcc);
         requester.linkWith(new CreditRequest());
         currentAcc.setRequester(requester);
