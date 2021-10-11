@@ -20,7 +20,7 @@ public class DepositAccount extends Account {
         this.requestType = RequestType.DEPOSIT;
     }
 
-    public double calculateInterest(double balance) {
+    private double calculateInterest(double balance) {
         return balance > 1000 ? 3 : 5;
     }
 

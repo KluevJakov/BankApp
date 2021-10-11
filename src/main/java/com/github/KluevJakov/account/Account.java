@@ -2,7 +2,11 @@ package com.github.KluevJakov.account;
 
 import com.github.KluevJakov.client.Client;
 import com.github.KluevJakov.requester.RequestType;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public abstract class Account {
     protected double balance;
     protected Client owner;
@@ -20,16 +24,4 @@ public abstract class Account {
     public abstract boolean withdraw(double moneyAmount);
 
     public abstract boolean transfer(Account forTransfer, double moneyAmount);
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public Client getOwner() {
-        return owner;
-    }
-
-    public RequestType getRequestType() {
-        return requestType;
-    }
 }
