@@ -2,10 +2,6 @@ import com.github.KluevJakov.account.Account;
 import com.github.KluevJakov.account.AccountFactory;
 import com.github.KluevJakov.client.Client;
 import com.github.KluevJakov.client.TrustClient;
-import com.github.KluevJakov.requester.CreditRequest;
-import com.github.KluevJakov.requester.DepositRequest;
-import com.github.KluevJakov.requester.RequestExecutor;
-import com.github.KluevJakov.requester.Requester;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -125,11 +121,6 @@ public class CurrentAccountTest {
     @Test
     public void requestDepositCase() {
         Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
-        Requester requester = new RequestExecutor(currentAcc);
-        requester.linkWith(new DepositRequest());
-        currentAcc.setRequester(requester);
-
-        currentAcc.accrueDeposit();
 
         assertEquals(103.5, currentAcc.getBalance(), delta);
     }
@@ -137,11 +128,6 @@ public class CurrentAccountTest {
     @Test
     public void requestCommissionCase() {
         Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
-        Requester requester = new RequestExecutor(currentAcc);
-        requester.linkWith(new CreditRequest());
-        currentAcc.setRequester(requester);
-
-        currentAcc.accrueCommission();
 
         assertEquals(100, currentAcc.getBalance(), delta);
     }

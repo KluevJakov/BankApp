@@ -1,5 +1,8 @@
 package com.github.KluevJakov.client;
 
+import lombok.ToString;
+
+@ToString
 public class TrustClient implements Client {
     private String name;
     private String surname;
@@ -34,15 +37,5 @@ public class TrustClient implements Client {
         public TrustClient build() {
             return TrustClient.this;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", address='" + address + '\'' +
-                ", passport=" + passport +
-                '}';
     }
 }

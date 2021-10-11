@@ -2,18 +2,20 @@ package com.github.KluevJakov.account;
 
 import com.github.KluevJakov.client.Client;
 import com.github.KluevJakov.requester.RequestType;
+import lombok.ToString;
 
 import java.util.Date;
 
+@ToString
 public class DepositAccount extends Account {
 
     private Date endDate;
+    private double interest;
 
     public DepositAccount(Client owner, double balance, Date endDate) {
         this.owner = owner;
         this.balance = balance;
         this.interest = calculateInterest(balance);
-        this.commission = 0;
         this.endDate = endDate;
         this.requestType = RequestType.DEPOSIT;
     }
@@ -22,9 +24,9 @@ public class DepositAccount extends Account {
         return balance > 1000 ? 3 : 5;
     }
 
-    public boolean withdraw(double outgo) {
-        if (balance >= outgo && endDate.after(new Date())) {
-            balance -= outgo;
+    public boolean withdraw(double moneyAmount) {
+        if (balance >= moneyAmount && endDate.after(new Date())) {
+            balance -= moneyAmount;
             return true;
         } else {
             return false;
@@ -32,31 +34,16 @@ public class DepositAccount extends Account {
     }
 
     @Override
-    public boolean transfer(Account forTransfer, double outgo) {
+    public boolean transfer(Account forTransfer, double moneyAmount) {
         if (forTransfer.getOwner().equals(this.getOwner())
-                && balance >= outgo
+                && balance >= moneyAmount
                 && endDate.after(new Date())
-                && outgo <= forTransfer.getOwner().paymentLimit()) {
-            balance -= outgo;
-            forTransfer.replenish(outgo);
+                && moneyAmount <= forTransfer.getOwner().paymentLimit()) {
+            balance -= moneyAmount;
+            forTransfer.replenish(moneyAmount);
             return true;
         } else {
             return false;
         }
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    @Override
-    public String toString() {
-        return "DepositAccount{" +
-                "balance=" + balance +
-                ", interest=" + interest +
-                ", commission=" + commission +
-                ", owner=" + owner +
-                ", endDate=" + endDate +
-                '}';
     }
 }

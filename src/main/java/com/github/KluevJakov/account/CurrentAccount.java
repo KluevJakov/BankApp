@@ -2,21 +2,24 @@ package com.github.KluevJakov.account;
 
 import com.github.KluevJakov.client.Client;
 import com.github.KluevJakov.requester.RequestType;
+import lombok.ToString;
 
+@ToString
 public class CurrentAccount extends Account {
+
+    private double interest;
 
     public CurrentAccount(Client owner, int balance, double interest) {
         this.owner = owner;
         this.balance = balance;
         this.interest = interest;
-        this.commission = 0;
         this.requestType = RequestType.DEPOSIT;
     }
 
     @Override
-    public boolean withdraw(double outgo) {
-        if (balance >= outgo && outgo > 0) {
-            balance -= outgo;
+    public boolean withdraw(double moneyAmount) {
+        if (balance >= moneyAmount && moneyAmount > 0) {
+            balance -= moneyAmount;
             return true;
         } else {
             return false;
@@ -24,26 +27,16 @@ public class CurrentAccount extends Account {
     }
 
     @Override
-    public boolean transfer(Account forTransfer, double outgo) {
+    public boolean transfer(Account forTransfer, double moneyAmount) {
         if (forTransfer.getOwner().equals(this.getOwner())
-                && balance >= outgo
-                && outgo > 0
-                && outgo <= forTransfer.getOwner().paymentLimit()) {
-            balance -= outgo;
-            forTransfer.replenish(outgo);
+                && balance >= moneyAmount
+                && moneyAmount > 0
+                && moneyAmount <= forTransfer.getOwner().paymentLimit()) {
+            balance -= moneyAmount;
+            forTransfer.replenish(moneyAmount);
             return true;
         } else {
             return false;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "CurrentAccount{" +
-                "balance=" + balance +
-                ", interest=" + interest +
-                ", commission=" + commission +
-                ", owner=" + owner +
-                '}';
     }
 }
