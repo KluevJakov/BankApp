@@ -6,10 +6,15 @@ import java.util.Date;
 
 public class AccountFactory {
 
-    private int interest;
-    private int commission;
+    private double interest;
+    private double commission;
 
-    public Account getCurrent(Client owner, int balance, double interest) {
+    public AccountFactory(double interest, double commission){
+        this.interest = interest;
+        this.commission = commission;
+    }
+
+    public Account getCurrent(Client owner, int balance) {
         return new CurrentAccount(owner, balance, interest);
     }
 
@@ -17,7 +22,7 @@ public class AccountFactory {
         return new DepositAccount(owner, balance, endDate);
     }
 
-    public Account getCredit(Client owner, int balance, double commission, int limit) {
+    public Account getCredit(Client owner, int balance, int limit) {
         return new CreditAccount(owner, balance, commission, limit);
     }
 }

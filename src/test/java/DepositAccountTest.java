@@ -17,7 +17,7 @@ public class DepositAccountTest {
 
     private final Double delta = 0.0001;
 
-    private AccountFactory accountFactory = new AccountFactory();
+    private AccountFactory accountFactory = new AccountFactory(5, 6);
 
     @Test
     public void replenishNegativeCase() {
@@ -113,7 +113,7 @@ public class DepositAccountTest {
     @Test
     public void transferToOtherAccountTypeCase() {
         Account currentAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
-        Account otherAcc = accountFactory.getCredit(client, 0, 1.2, 1000);
+        Account otherAcc = accountFactory.getCredit(client, 0, 1000);
 
         currentAcc.transfer(otherAcc, 30);
 

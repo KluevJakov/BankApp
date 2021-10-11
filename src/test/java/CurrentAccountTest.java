@@ -14,11 +14,11 @@ public class CurrentAccountTest {
 
     private final Double delta = 0.0001;
 
-    private AccountFactory accountFactory = new AccountFactory();
+    private AccountFactory accountFactory = new AccountFactory(3.5, 1.2);
 
     @Test
     public void replenishNegativeCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 0, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 0);
 
         currentAcc.replenish(-100);
 
@@ -27,7 +27,7 @@ public class CurrentAccountTest {
 
     @Test
     public void replenishNullCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         currentAcc.replenish(0);
 
@@ -36,7 +36,7 @@ public class CurrentAccountTest {
 
     @Test
     public void replenishPositiveCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 0, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 0);
 
         currentAcc.replenish(100);
 
@@ -45,7 +45,7 @@ public class CurrentAccountTest {
 
     @Test
     public void withdrawPositiveCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         currentAcc.withdraw(100);
 
@@ -54,7 +54,7 @@ public class CurrentAccountTest {
 
     @Test
     public void withdrawNegativeCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         currentAcc.withdraw(-100);
 
@@ -63,7 +63,7 @@ public class CurrentAccountTest {
 
     @Test
     public void notEnoughtBalanceCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         currentAcc.withdraw(1000);
 
@@ -76,8 +76,8 @@ public class CurrentAccountTest {
                 .setAddress("Address")
                 .setPassport(0)
                 .build();
-        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
-        Account otherAcc = accountFactory.getCurrent(otherClient, 0, 5.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
+        Account otherAcc = accountFactory.getCurrent(otherClient, 0);
 
         currentAcc.transfer(otherAcc, 50);
 
@@ -87,8 +87,8 @@ public class CurrentAccountTest {
 
     @Test
     public void transferToMyAccountCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
-        Account otherAcc = accountFactory.getCurrent(client, 0, 5.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
+        Account otherAcc = accountFactory.getCurrent(client, 0);
 
         currentAcc.transfer(otherAcc, 30);
 
@@ -98,8 +98,8 @@ public class CurrentAccountTest {
 
     @Test
     public void transferNegativeCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
-        Account otherAcc = accountFactory.getCurrent(client, 0, 5.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
+        Account otherAcc = accountFactory.getCurrent(client, 0);
 
         currentAcc.transfer(otherAcc, -30);
 
@@ -109,8 +109,8 @@ public class CurrentAccountTest {
 
     @Test
     public void transferToOtherAccountTypeCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
-        Account otherAcc = accountFactory.getCredit(client, 0, 1.2, 1000);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
+        Account otherAcc = accountFactory.getCredit(client, 0,1000);
 
         currentAcc.transfer(otherAcc, 30);
 
@@ -120,14 +120,14 @@ public class CurrentAccountTest {
 
     @Test
     public void requestDepositCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         assertEquals(103.5, currentAcc.getBalance(), delta);
     }
 
     @Test
     public void requestCommissionCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 100, 3.5);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         assertEquals(100, currentAcc.getBalance(), delta);
     }
