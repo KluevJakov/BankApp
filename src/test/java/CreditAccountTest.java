@@ -7,11 +7,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class CreditAccountTest {
-    Client client = TrustClient.newBuilder("Name", "Surname")
+    private Client client = TrustClient.newBuilder("Name", "Surname")
             .setAddress("Address")
             .setPassport(0)
             .build();
-    AccountFactory accountFactory = new AccountFactory();
+    private AccountFactory accountFactory = new AccountFactory();
     double delta = 0.0001;
 
     @Test

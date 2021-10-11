@@ -10,14 +10,14 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 
 public class DepositAccountTest {
-    Client client = TrustClient.newBuilder("Name", "Surname")
+    private Client client = TrustClient.newBuilder("Name", "Surname")
             .setAddress("Address")
             .setPassport(0)
             .build();
 
-    Double delta = 0.0001;
+    private final Double delta = 0.0001;
 
-    AccountFactory accountFactory = new AccountFactory();
+    private AccountFactory accountFactory = new AccountFactory();
 
     @Test
     public void replenishNegativeCase() {

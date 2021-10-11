@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class ClientTest {
-    double delta = 0.0001;
+    private final double delta = 0.0001;
 
     @Test
     public void limitTrustedClientCase() {
