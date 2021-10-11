@@ -5,11 +5,11 @@ import com.github.KluevJakov.requester.RequestType;
 import lombok.ToString;
 
 @ToString
-public class CurrentAccount extends Account {
+public class CurrentAccount extends AbstractAccount {
 
     private double interest;
 
-    public CurrentAccount(Client owner, int balance, double interest) {
+    public CurrentAccount(Client owner, double balance, double interest) {
         this.owner = owner;
         this.balance = balance;
         this.interest = interest;
@@ -21,22 +21,19 @@ public class CurrentAccount extends Account {
         if (balance >= moneyAmount && moneyAmount > 0) {
             balance -= moneyAmount;
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
-    public boolean transfer(Account forTransfer, double moneyAmount) {
+    public boolean transfer(AbstractAccount forTransfer, double moneyAmount) {
         if (forTransfer.getOwner().equals(this.getOwner())
                 && balance >= moneyAmount
-                && moneyAmount > 0
-                && moneyAmount <= forTransfer.getOwner().paymentLimit()) {
+                && moneyAmount > 0) {
             balance -= moneyAmount;
             forTransfer.replenish(moneyAmount);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }

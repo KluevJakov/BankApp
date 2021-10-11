@@ -1,7 +1,6 @@
-import com.github.KluevJakov.account.Account;
+import com.github.KluevJakov.account.AbstractAccount;
 import com.github.KluevJakov.account.AccountFactory;
 import com.github.KluevJakov.client.Client;
-import com.github.KluevJakov.client.TrustClient;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -10,7 +9,7 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 
 public class DepositAccountTest {
-    private Client client = TrustClient.newBuilder("Name", "Surname")
+    private Client client = Client.newBuilder("Name", "Surname")
             .setAddress("Address")
             .setPassport(0)
             .build();
@@ -21,7 +20,7 @@ public class DepositAccountTest {
 
     @Test
     public void replenishNegativeCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 0, new Date());
+        AbstractAccount currentAcc = accountFactory.getDeposit(client, 0, new Date());
 
         currentAcc.replenish(-100);
 
@@ -30,7 +29,7 @@ public class DepositAccountTest {
 
     @Test
     public void replenishNullCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
+        AbstractAccount currentAcc = accountFactory.getDeposit(client, 100, new Date());
 
         currentAcc.replenish(0);
 
@@ -39,7 +38,7 @@ public class DepositAccountTest {
 
     @Test
     public void replenishPositiveCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 0, new Date());
+        AbstractAccount currentAcc = accountFactory.getDeposit(client, 0, new Date());
 
         currentAcc.replenish(100);
 
@@ -48,7 +47,7 @@ public class DepositAccountTest {
 
     @Test
     public void withdrawPositiveCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
+        AbstractAccount currentAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
 
         currentAcc.withdraw(100);
 
@@ -57,7 +56,7 @@ public class DepositAccountTest {
 
     @Test
     public void withdrawNegativeCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
+        AbstractAccount currentAcc = accountFactory.getDeposit(client, 100, new Date());
 
         currentAcc.withdraw(-100);
 
@@ -66,7 +65,7 @@ public class DepositAccountTest {
 
     @Test
     public void notEnoughtBalanceCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
+        AbstractAccount currentAcc = accountFactory.getDeposit(client, 100, new Date());
 
         currentAcc.withdraw(1000);
 
@@ -75,12 +74,12 @@ public class DepositAccountTest {
 
     @Test
     public void transferToOtherOwnerCase() {
-        Client otherClient = TrustClient.newBuilder("Name", "Surname")
+        Client otherClient = Client.newBuilder("Name", "Surname")
                 .setAddress("Address")
                 .setPassport(0)
                 .build();
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
-        Account otherAcc = accountFactory.getDeposit(otherClient, 0, new Date());
+        AbstractAccount currentAcc = accountFactory.getDeposit(client, 100, new Date());
+        AbstractAccount otherAcc = accountFactory.getDeposit(otherClient, 0, new Date());
 
         currentAcc.transfer(otherAcc, 50);
 
@@ -90,8 +89,8 @@ public class DepositAccountTest {
 
     @Test
     public void transferToMyAccountCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
-        Account otherAcc = accountFactory.getDeposit(client, 0, new Date(2021, Calendar.FEBRUARY, 1));
+        AbstractAccount currentAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
+        AbstractAccount otherAcc = accountFactory.getDeposit(client, 0, new Date(2021, Calendar.FEBRUARY, 1));
 
         currentAcc.transfer(otherAcc, 30);
 
@@ -101,8 +100,8 @@ public class DepositAccountTest {
 
     @Test
     public void transferNegativeCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
-        Account otherAcc = accountFactory.getDeposit(client, 0, new Date());
+        AbstractAccount currentAcc = accountFactory.getDeposit(client, 100, new Date());
+        AbstractAccount otherAcc = accountFactory.getDeposit(client, 0, new Date());
 
         currentAcc.transfer(otherAcc, -30);
 
@@ -112,8 +111,8 @@ public class DepositAccountTest {
 
     @Test
     public void transferToOtherAccountTypeCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
-        Account otherAcc = accountFactory.getCredit(client, 0, 1000);
+        AbstractAccount currentAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
+        AbstractAccount otherAcc = accountFactory.getCredit(client, 0, 1000);
 
         currentAcc.transfer(otherAcc, 30);
 

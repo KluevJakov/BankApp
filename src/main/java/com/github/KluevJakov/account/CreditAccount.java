@@ -5,7 +5,7 @@ import com.github.KluevJakov.requester.RequestType;
 import lombok.ToString;
 
 @ToString
-public class CreditAccount extends Account {
+public class CreditAccount extends AbstractAccount {
 
     private int limit;
     private double commission;
@@ -23,21 +23,18 @@ public class CreditAccount extends Account {
         if (balance - moneyAmount >= (limit * -1)) {
             balance -= moneyAmount;
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
-    public boolean transfer(Account forTransfer, double moneyAmount) {
+    public boolean transfer(AbstractAccount forTransfer, double moneyAmount) {
         if (forTransfer.getOwner().equals(this.getOwner())
-                && balance - moneyAmount >= (limit * -1)
-                && moneyAmount <= forTransfer.getOwner().paymentLimit()) {
+                && balance - moneyAmount >= (limit * -1)) {
             balance -= moneyAmount;
             forTransfer.replenish(moneyAmount);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }

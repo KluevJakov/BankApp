@@ -7,7 +7,7 @@ import lombok.ToString;
 import java.util.Date;
 
 @ToString
-public class DepositAccount extends Account {
+public class DepositAccount extends AbstractAccount {
 
     private Date endDate;
     private double interest;
@@ -28,22 +28,19 @@ public class DepositAccount extends Account {
         if (balance >= moneyAmount && endDate.after(new Date())) {
             balance -= moneyAmount;
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
-    public boolean transfer(Account forTransfer, double moneyAmount) {
+    public boolean transfer(AbstractAccount forTransfer, double moneyAmount) {
         if (forTransfer.getOwner().equals(this.getOwner())
                 && balance >= moneyAmount
-                && endDate.after(new Date())
-                && moneyAmount <= forTransfer.getOwner().paymentLimit()) {
+                && endDate.after(new Date())) {
             balance -= moneyAmount;
             forTransfer.replenish(moneyAmount);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }
