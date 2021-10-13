@@ -1,4 +1,3 @@
-import com.github.KluevJakov.account.AbstractAccount;
 import com.github.KluevJakov.account.Account;
 import com.github.KluevJakov.account.AccountFactory;
 import com.github.KluevJakov.client.Client;
@@ -12,7 +11,7 @@ public class CreditAccountTest {
             .setPassport(0)
             .build();
     private AccountFactory accountFactory = new AccountFactory(3, 5, 200);
-    double delta = 0.0001;
+    private double delta = 0.0001;
 
     @Test
     public void replenishNegativeCase() {
@@ -25,7 +24,7 @@ public class CreditAccountTest {
 
     @Test
     public void replenishNullCase() {
-        Account creditAcc = accountFactory.getCredit(client, 1000, 5000);
+        Account creditAcc = accountFactory.getCredit(client, 100, 5000);
 
         creditAcc.replenish(0);
 
@@ -38,7 +37,7 @@ public class CreditAccountTest {
 
         creditAcc.replenish(100);
 
-        assertEquals(100, creditAcc.getBalance(), delta);
+        assertEquals(1100, creditAcc.getBalance(), delta);
     }
 
     @Test
@@ -63,9 +62,9 @@ public class CreditAccountTest {
     public void withdrawNegativeCase() {
         Account creditAcc = accountFactory.getCredit(client, 1000,5000);
 
-        creditAcc.withdraw(-100);
+        creditAcc.withdraw(100);
 
-        assertEquals(1000, creditAcc.getBalance(), delta);
+        assertEquals(900, creditAcc.getBalance(), delta);
     }
 
     @Test
@@ -83,12 +82,13 @@ public class CreditAccountTest {
                 .setAddress("Address")
                 .setPassport(0)
                 .build();
+
         Account creditAcc = accountFactory.getCredit(client, 1000, 5000);
         Account otherAcc = accountFactory.getCredit(otherClient, 0,6000);
 
         creditAcc.transfer(otherAcc, 50);
 
-        assertEquals(100, creditAcc.getBalance(), delta);
+        assertEquals(1000, creditAcc.getBalance(), delta);
         assertEquals(0, otherAcc.getBalance(), delta);
     }
 
@@ -126,16 +126,20 @@ public class CreditAccountTest {
     }
 
     @Test
-    public void requestDepositCase() {
+    public void processPercentagePositiveBalanceCase() {
         Account creditAcc = accountFactory.getCredit(client, 100,5000);
 
-        assertEquals(105, creditAcc.getBalance(), delta);
+        creditAcc.processPercentage();
+
+        assertEquals(100, creditAcc.getBalance(), delta);
     }
 
     @Test
-    public void requestCommissionCase() {
-        Account creditAcc = accountFactory.getCredit(client, 100,5000);
+    public void processPercentageNegativeBalanceCase() {
+        Account creditAcc = accountFactory.getCredit(client, -100,5000);
 
-        assertEquals(100, creditAcc.getBalance(), delta);
+        creditAcc.processPercentage();
+
+        assertEquals(-105, creditAcc.getBalance(), delta);
     }
 }

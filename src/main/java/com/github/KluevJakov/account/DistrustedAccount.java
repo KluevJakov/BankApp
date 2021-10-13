@@ -28,5 +28,4 @@ public class DistrustedAccount extends AccountDecorator {
         }
         return false;
     }
-
 }

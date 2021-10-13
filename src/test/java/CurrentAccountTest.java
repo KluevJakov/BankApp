@@ -118,17 +118,12 @@ public class CurrentAccountTest {
     }
 
     @Test
-    public void requestDepositCase() {
+    public void processPercentageCase() {
         Account currentAcc = accountFactory.getCurrent(client, 100);
+
+        currentAcc.processPercentage();
 
         assertEquals(103.5, currentAcc.getBalance(), delta);
-    }
-
-    @Test
-    public void requestCommissionCase() {
-        Account currentAcc = accountFactory.getCurrent(client, 100);
-
-        assertEquals(100, currentAcc.getBalance(), delta);
     }
 
 }

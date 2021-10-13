@@ -38,4 +38,9 @@ public class CurrentAccount extends AbstractAccount {
         }
         return false;
     }
+
+    @Override
+    public void processPercentage() {
+        replenish(balance * interest / 100);
+    }
 }

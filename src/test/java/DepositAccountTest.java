@@ -1,4 +1,3 @@
-import com.github.KluevJakov.account.AbstractAccount;
 import com.github.KluevJakov.account.Account;
 import com.github.KluevJakov.account.AccountFactory;
 import com.github.KluevJakov.client.Client;
@@ -21,56 +20,56 @@ public class DepositAccountTest {
 
     @Test
     public void replenishNegativeCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 0, new Date());
+        Account depositAcc = accountFactory.getDeposit(client, 0, new Date());
 
-        currentAcc.replenish(-100);
+        depositAcc.replenish(-100);
 
-        assertEquals(0, currentAcc.getBalance(), delta);
+        assertEquals(0, depositAcc.getBalance(), delta);
     }
 
     @Test
     public void replenishNullCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
+        Account depositAcc = accountFactory.getDeposit(client, 100, new Date());
 
-        currentAcc.replenish(0);
+        depositAcc.replenish(0);
 
-        assertEquals(100, currentAcc.getBalance(), delta);
+        assertEquals(100, depositAcc.getBalance(), delta);
     }
 
     @Test
     public void replenishPositiveCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 0, new Date());
+        Account depositAcc = accountFactory.getDeposit(client, 0, new Date());
 
-        currentAcc.replenish(100);
+        depositAcc.replenish(100);
 
-        assertEquals(100, currentAcc.getBalance(), delta);
+        assertEquals(100, depositAcc.getBalance(), delta);
     }
 
     @Test
     public void withdrawPositiveCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
+        Account depositAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
 
-        currentAcc.withdraw(100);
+        depositAcc.withdraw(100);
 
-        assertEquals(0, currentAcc.getBalance(), delta);
+        assertEquals(0, depositAcc.getBalance(), delta);
     }
 
     @Test
     public void withdrawNegativeCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
+        Account depositAcc = accountFactory.getDeposit(client, 100, new Date());
 
-        currentAcc.withdraw(-100);
+        depositAcc.withdraw(-100);
 
-        assertEquals(100, currentAcc.getBalance(), delta);
+        assertEquals(100, depositAcc.getBalance(), delta);
     }
 
     @Test
     public void notEnoughtBalanceCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
+        Account depositAcc = accountFactory.getDeposit(client, 100, new Date());
 
-        currentAcc.withdraw(1000);
+        depositAcc.withdraw(1000);
 
-        assertEquals(100, currentAcc.getBalance(), delta);
+        assertEquals(100, depositAcc.getBalance(), delta);
     }
 
     @Test
@@ -79,73 +78,54 @@ public class DepositAccountTest {
                 .setAddress("Address")
                 .setPassport(0)
                 .build();
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
+        Account depositAcc = accountFactory.getDeposit(client, 100, new Date());
         Account otherAcc = accountFactory.getDeposit(otherClient, 0, new Date());
 
-        currentAcc.transfer(otherAcc, 50);
+        depositAcc.transfer(otherAcc, 50);
 
-        assertEquals(100, currentAcc.getBalance(), delta);
+        assertEquals(100, depositAcc.getBalance(), delta);
         assertEquals(0, otherAcc.getBalance(), delta);
     }
 
     @Test
     public void transferToMyAccountCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
+        Account depositAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
         Account otherAcc = accountFactory.getDeposit(client, 0, new Date(2021, Calendar.FEBRUARY, 1));
 
-        currentAcc.transfer(otherAcc, 30);
+        depositAcc.transfer(otherAcc, 30);
 
-        assertEquals(70, currentAcc.getBalance(), delta);
+        assertEquals(70, depositAcc.getBalance(), delta);
         assertEquals(30, otherAcc.getBalance(), delta);
     }
 
     @Test
     public void transferNegativeCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
+        Account depositAcc = accountFactory.getDeposit(client, 100, new Date());
         Account otherAcc = accountFactory.getDeposit(client, 0, new Date());
 
-        currentAcc.transfer(otherAcc, -30);
+        depositAcc.transfer(otherAcc, -30);
 
-        assertEquals(100, currentAcc.getBalance(), delta);
+        assertEquals(100, depositAcc.getBalance(), delta);
         assertEquals(0, otherAcc.getBalance(), delta);
     }
 
     @Test
     public void transferToOtherAccountTypeCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
+        Account depositAcc = accountFactory.getDeposit(client, 100, new Date(2020, Calendar.FEBRUARY, 1));
         Account otherAcc = accountFactory.getCredit(client, 0, 1000);
 
-        currentAcc.transfer(otherAcc, 30);
+        depositAcc.transfer(otherAcc, 30);
 
-        assertEquals(70, currentAcc.getBalance(), delta);
+        assertEquals(70, depositAcc.getBalance(), delta);
         assertEquals(30, otherAcc.getBalance(), delta);
     }
 
-    /*
     @Test
-    public void requestDepositCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
+    public void processPercentageCase() {
+        Account depositAcc = accountFactory.getDeposit(client, 100, new Date());
 
-        requester.linkWith(new DepositRequest());
-        currentAcc.setRequester(requester);
+        depositAcc.processPercentage();
 
-        currentAcc.accrueDeposit();
-
-        assertEquals(105, currentAcc.getBalance(), delta);
+        assertEquals(105, depositAcc.getBalance(), delta);
     }
-     */
-
-    /*
-    @Test
-    public void requestCommissionCase() {
-        Account currentAcc = accountFactory.getDeposit(client, 100, new Date());
-        Requester requester = new RequestExecutor(currentAcc);
-        requester.linkWith(new CreditRequest());
-        currentAcc.setRequester(requester);
-
-        currentAcc.accrueCommission();
-
-        assertEquals(100, currentAcc.getBalance(), delta);
-    }
-     */
 }

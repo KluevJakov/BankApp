@@ -9,6 +9,8 @@ public interface Account {
 
     boolean withdraw(double moneyAmount);
 
+    void processPercentage();
+
     boolean transfer(Account forTransfer, double moneyAmount);
 
     Client getOwner();

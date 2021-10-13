@@ -38,11 +38,17 @@ public class DepositAccount extends AbstractAccount {
     public boolean transfer(Account forTransfer, double moneyAmount) {
         if (forTransfer.getOwner().equals(this.getOwner())
                 && balance >= moneyAmount
-                && endDate.after(new Date())) {
+                && endDate.after(new Date())
+                && moneyAmount > 0) {
             balance -= moneyAmount;
             forTransfer.replenish(moneyAmount);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void processPercentage() {
+        replenish(balance * interest / 100);
     }
 }

@@ -21,6 +21,11 @@ public class AccountDecorator implements Account {
     }
 
     @Override
+    public void processPercentage() {
+        wrappee.processPercentage();
+    }
+
+    @Override
     public boolean transfer(Account forTransfer, double moneyAmount) {
         return wrappee.transfer(forTransfer, moneyAmount);
     }

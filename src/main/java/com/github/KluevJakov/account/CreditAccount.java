@@ -22,7 +22,7 @@ public class CreditAccount extends AbstractAccount {
 
     @Override
     public boolean withdraw(double moneyAmount) {
-        if (balance - moneyAmount >= (limit * -1)) {
+        if (moneyAmount > 0 && balance - moneyAmount >= (limit * -1)) {
             balance -= moneyAmount;
             return true;
         }
@@ -32,11 +32,19 @@ public class CreditAccount extends AbstractAccount {
     @Override
     public boolean transfer(Account forTransfer, double moneyAmount) {
         if (forTransfer.getOwner().equals(this.getOwner())
-                && balance - moneyAmount >= (limit * -1)) {
+                && balance - moneyAmount >= (limit * -1)
+                && moneyAmount > 0) {
             balance -= moneyAmount;
             forTransfer.replenish(moneyAmount);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void processPercentage() {
+        if (balance < 0) {
+            withdraw(-1 * balance * commission / 100);
+        }
     }
 }
