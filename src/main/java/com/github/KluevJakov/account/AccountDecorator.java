@@ -1,7 +1,37 @@
 package com.github.KluevJakov.account;
 
-public class AccountDecorator implements Account{
+import com.github.KluevJakov.client.Client;
+import lombok.Getter;
+
+public class AccountDecorator implements Account {
     private Account wrappee;
 
+    AccountDecorator(Account account) {
+        this.wrappee = account;
+    }
 
+    @Override
+    public boolean replenish(double moneyAmount) {
+        return wrappee.replenish(moneyAmount);
+    }
+
+    @Override
+    public boolean withdraw(double moneyAmount) {
+        return wrappee.withdraw(moneyAmount);
+    }
+
+    @Override
+    public boolean transfer(Account forTransfer, double moneyAmount) {
+        return wrappee.transfer(forTransfer, moneyAmount);
+    }
+
+    @Override
+    public Client getOwner() {
+        return wrappee.getOwner();
+    }
+
+    @Override
+    public double getBalance() {
+        return wrappee.getBalance();
+    }
 }

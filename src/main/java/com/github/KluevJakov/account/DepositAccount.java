@@ -2,11 +2,13 @@ package com.github.KluevJakov.account;
 
 import com.github.KluevJakov.client.Client;
 import com.github.KluevJakov.requester.RequestType;
+import lombok.Getter;
 import lombok.ToString;
 
 import java.util.Date;
 
 @ToString
+@Getter
 public class DepositAccount extends AbstractAccount {
 
     private Date endDate;
@@ -33,7 +35,7 @@ public class DepositAccount extends AbstractAccount {
     }
 
     @Override
-    public boolean transfer(AbstractAccount forTransfer, double moneyAmount) {
+    public boolean transfer(Account forTransfer, double moneyAmount) {
         if (forTransfer.getOwner().equals(this.getOwner())
                 && balance >= moneyAmount
                 && endDate.after(new Date())) {

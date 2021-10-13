@@ -1,4 +1,4 @@
-import com.github.KluevJakov.account.AbstractAccount;
+import com.github.KluevJakov.account.Account;
 import com.github.KluevJakov.account.AccountFactory;
 import com.github.KluevJakov.client.Client;
 import org.junit.Test;
@@ -13,11 +13,11 @@ public class CurrentAccountTest {
 
     private final Double delta = 0.0001;
 
-    private AccountFactory accountFactory = new AccountFactory(3.5, 1.2);
+    private AccountFactory accountFactory = new AccountFactory(3.5, 1.2, 200);
 
     @Test
     public void replenishNegativeCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 0);
+        Account currentAcc = accountFactory.getCurrent(client, 0);
 
         currentAcc.replenish(-100);
 
@@ -26,7 +26,7 @@ public class CurrentAccountTest {
 
     @Test
     public void replenishNullCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 100);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         currentAcc.replenish(0);
 
@@ -35,7 +35,7 @@ public class CurrentAccountTest {
 
     @Test
     public void replenishPositiveCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 0);
+        Account currentAcc = accountFactory.getCurrent(client, 0);
 
         currentAcc.replenish(100);
 
@@ -44,7 +44,7 @@ public class CurrentAccountTest {
 
     @Test
     public void withdrawPositiveCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 100);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         currentAcc.withdraw(100);
 
@@ -53,7 +53,7 @@ public class CurrentAccountTest {
 
     @Test
     public void withdrawNegativeCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 100);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         currentAcc.withdraw(-100);
 
@@ -62,7 +62,7 @@ public class CurrentAccountTest {
 
     @Test
     public void notEnoughtBalanceCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 100);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         currentAcc.withdraw(1000);
 
@@ -75,8 +75,8 @@ public class CurrentAccountTest {
                 .setAddress("Address")
                 .setPassport(0)
                 .build();
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 100);
-        AbstractAccount otherAcc = accountFactory.getCurrent(otherClient, 0);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
+        Account otherAcc = accountFactory.getCurrent(otherClient, 0);
 
         currentAcc.transfer(otherAcc, 50);
 
@@ -86,8 +86,8 @@ public class CurrentAccountTest {
 
     @Test
     public void transferToMyAccountCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 100);
-        AbstractAccount otherAcc = accountFactory.getCurrent(client, 0);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
+        Account otherAcc = accountFactory.getCurrent(client, 0);
 
         currentAcc.transfer(otherAcc, 30);
 
@@ -97,8 +97,8 @@ public class CurrentAccountTest {
 
     @Test
     public void transferNegativeCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 100);
-        AbstractAccount otherAcc = accountFactory.getCurrent(client, 0);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
+        Account otherAcc = accountFactory.getCurrent(client, 0);
 
         currentAcc.transfer(otherAcc, -30);
 
@@ -108,8 +108,8 @@ public class CurrentAccountTest {
 
     @Test
     public void transferToOtherAccountTypeCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 100);
-        AbstractAccount otherAcc = accountFactory.getCredit(client, 0,1000);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
+        Account otherAcc = accountFactory.getCredit(client, 0,1000);
 
         currentAcc.transfer(otherAcc, 30);
 
@@ -119,14 +119,14 @@ public class CurrentAccountTest {
 
     @Test
     public void requestDepositCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 100);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         assertEquals(103.5, currentAcc.getBalance(), delta);
     }
 
     @Test
     public void requestCommissionCase() {
-        AbstractAccount currentAcc = accountFactory.getCurrent(client, 100);
+        Account currentAcc = accountFactory.getCurrent(client, 100);
 
         assertEquals(100, currentAcc.getBalance(), delta);
     }

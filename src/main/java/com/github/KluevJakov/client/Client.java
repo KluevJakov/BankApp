@@ -7,7 +7,7 @@ public class Client {
     private String name;
     private String surname;
     private String address;
-    private int passport;
+    private int passport = 0;
 
     public Client(String name, String surname) {
         this.name = name;
@@ -32,5 +32,9 @@ public class Client {
         public Client build() {
             return Client.this;
         }
+    }
+
+    public boolean isTrusted() {
+        return this.address != null && this.passport != 0;
     }
 }

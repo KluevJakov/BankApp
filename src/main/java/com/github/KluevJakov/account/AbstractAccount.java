@@ -4,9 +4,9 @@ import com.github.KluevJakov.client.Client;
 import com.github.KluevJakov.requester.RequestType;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
-@Setter
 public abstract class AbstractAccount implements Account {
     protected double balance;
     protected Client owner;
@@ -22,5 +22,9 @@ public abstract class AbstractAccount implements Account {
 
     public abstract boolean withdraw(double moneyAmount);
 
-    public abstract boolean transfer(AbstractAccount forTransfer, double moneyAmount);
+    public abstract boolean transfer(Account forTransfer, double moneyAmount);
+
+    public Client getOwner() {
+        return owner;
+    }
 }
