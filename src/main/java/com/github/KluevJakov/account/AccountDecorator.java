@@ -1,7 +1,7 @@
 package com.github.KluevJakov.account;
 
 import com.github.KluevJakov.client.Client;
-import lombok.Getter;
+import com.github.KluevJakov.requester.RequestType;
 
 public class AccountDecorator implements Account {
     private Account wrappee;
@@ -33,5 +33,10 @@ public class AccountDecorator implements Account {
     @Override
     public double getBalance() {
         return wrappee.getBalance();
+    }
+
+    @Override
+    public RequestType getRequestType() {
+        return wrappee.getRequestType();
     }
 }

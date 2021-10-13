@@ -3,8 +3,6 @@ package com.github.KluevJakov.account;
 import com.github.KluevJakov.client.Client;
 import com.github.KluevJakov.requester.RequestType;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 public abstract class AbstractAccount implements Account {
