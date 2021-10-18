@@ -13,26 +13,29 @@ public class AccountFactory {
     private double transferLimit;
 
     public Account getCurrent(Client owner, double balance) {
+        Account account = new CurrentAccount(owner, balance, interest);
         if (owner.isTrusted()) {
-            return new CurrentAccount(owner, balance, interest);
+            return account;
         } else {
-            return new DistrustedAccount(transferLimit, new CurrentAccount(owner, balance, interest));
+            return new DistrustedAccount(transferLimit, account);
         }
     }
 
     public Account getDeposit(Client owner, double balance, Date endDate) {
+        Account account = new DepositAccount(owner, balance, endDate);
         if (owner.isTrusted()) {
-            return new DepositAccount(owner, balance, endDate);
+            return account;
         } else {
-            return new DistrustedAccount(transferLimit, new DepositAccount(owner, balance, endDate));
+            return new DistrustedAccount(transferLimit, account);
         }
     }
 
     public Account getCredit(Client owner, double balance, int limit) {
+        Account account = new CreditAccount(owner, balance, commission, limit);
         if (owner.isTrusted()) {
-            return new CreditAccount(owner, balance, commission, limit);
+            return account;
         } else {
-            return new DistrustedAccount(transferLimit, new CreditAccount(owner, balance, commission, limit));
+            return new DistrustedAccount(transferLimit, account);
         }
     }
 }
